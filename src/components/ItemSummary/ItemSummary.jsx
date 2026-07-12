@@ -1,3 +1,5 @@
+import './ItemSummary.css';
+
 export default function ItemSummary({ item, offersCount }) {
   if (!item) return null;
 
@@ -31,7 +33,7 @@ export default function ItemSummary({ item, offersCount }) {
         
         <div className="item-info-bottom">
           <span className="item-price">
-            {item.price === 0 ? 'Grátis (Doação)' : `Preço Base: R$ ${item.price.toFixed(2)}`}
+            {item.price === 0 ? 'Retirada gratuita' : `Preço Base: R$ ${item.price.toFixed(2)}`}
           </span>
           <span className="proposals-count">
             {offersCount} {offersCount === 1 ? 'proposta recebida' : 'propostas recebidas'}

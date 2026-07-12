@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { offerService } from '../services/offerService';
-import ItemSummary from '../components/ItemSummary';
+import ItemSummary from '../../../components/ItemSummary/ItemSummary';
 import OffersList from '../components/OffersList';
 import OfferDetails from '../components/OfferDetails';
 import AcceptModal from '../components/AcceptModal';
@@ -11,7 +11,6 @@ import './ManageOffersPage.css';
 
 export default function ManageOffersPage() {
   const { itemId } = useParams();
-  const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [offers, setOffers] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -106,13 +105,9 @@ export default function ManageOffersPage() {
     }
   }, [loadItemData, triggerToast]);
 
-  const handleGoToCollection = useCallback((collectionId) => {
-    navigate(`/items/${itemId}/collections/${collectionId}`);
-  }, [navigate, itemId]);
-
   if (loading) {
     return (
-      <div className="manage-offers-container skeleton-loading-state">
+      <main className="manage-offers-container skeleton-loading-state">
         <header className="page-header">
           <div className="skeleton-line skeleton-page-title skeleton-shimmer"></div>
           <div className="skeleton-line skeleton-page-subtitle skeleton-shimmer"></div>
@@ -136,23 +131,23 @@ export default function ManageOffersPage() {
             <div className="skeleton-details-placeholder skeleton-shimmer"></div>
           </section>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (error) {
     return (
-      <div className="manage-offers-container">
+      <main className="manage-offers-container">
         <header className="page-header">
           <h1>Gerenciamento de Ofertas</h1>
         </header>
         <ErrorView message={error} onRetry={() => loadItemData(true)} />
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="manage-offers-container">
+    <main className="manage-offers-container">
       {/* 1. Cabeçalho de controle */}
       <header className="page-header">
         <h1>Gerenciamento de Ofertas</h1>
@@ -185,7 +180,6 @@ export default function ManageOffersPage() {
             onReject={handleRejectOffer}
             isActionLoading={actionLoading}
             onBackToList={() => setSelectedOffer(null)}
-            onGoToCollection={handleGoToCollection}
           />
         </section>
       </div>
@@ -206,6 +200,6 @@ export default function ManageOffersPage() {
           <span className="toast-message">{toast.message}</span>
         </div>
       )}
-    </div>
+    </main>
   );
 }

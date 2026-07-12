@@ -73,7 +73,7 @@ export default function AcceptModal({ isOpen, offer, loading, onClose, onConfirm
             <div className="summary-row">
               <span className="summary-label">Valor Ofertado:</span>
               <span className="summary-value price-value">
-                {offer.price === 0 ? 'Grátis (Doação)' : `R$ ${offer.price.toFixed(2)}`}
+                {offer.price === 0 ? 'Retirada gratuita' : `R$ ${offer.price.toFixed(2)}`}
               </span>
             </div>
 

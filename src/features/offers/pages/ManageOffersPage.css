@@ -146,121 +146,6 @@
   }
 }
 
-/* Estilos para o Resumo do Item (TASK-002) */
-.item-detail-panel {
-  display: flex;
-  flex-direction: column;
-  background-color: #FFFFFF;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  box-shadow: var(--shadow-subtle);
-  margin-bottom: 24px;
-}
-
-@media (min-width: 768px) {
-  .item-detail-panel {
-    flex-direction: row;
-    height: 180px;
-  }
-}
-
-.item-panel-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-}
-
-@media (min-width: 768px) {
-  .item-panel-img {
-    width: 240px;
-    height: 100%;
-  }
-}
-
-.item-panel-info {
-  padding: 20px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.item-info-top {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.item-title-area h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0;
-  color: var(--color-text-main);
-}
-
-.item-description {
-  font-size: 13px;
-  color: var(--color-text-muted);
-  margin: 4px 0 0 0;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.item-info-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid var(--color-border);
-  padding-top: 12px;
-  margin-top: 4px;
-}
-
-.item-price {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--color-primary-dark);
-}
-
-.proposals-count {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-}
-
-/* Badges de Status do Item */
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  border-radius: 20px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  color: #FFFFFF;
-  width: fit-content;
-}
-
-.badge.available {
-  background-color: var(--color-primary);
-}
-
-.badge.negotiating {
-  background-color: var(--color-secondary-dark);
-  color: var(--color-text-main);
-}
-
-.badge.reserved {
-  background-color: #2196F3;
-}
-
-.badge.collected {
-  background-color: #9E9E9E;
-}
 
 /* Estilos para o Painel e Lista de Propostas (TASK-003) */
 .offers-list-container {
@@ -496,18 +381,18 @@
 }
 
 .offer-status-badge.status-pending {
-  background-color: #FFFDE7;
-  color: #F57F17;
+  background-color: #FFF8E1;
+  color: #B75000; /* Laranja profundo - Contraste > 4.5:1 */
 }
 
 .offer-status-badge.status-accepted {
   background-color: #E8F5E9;
-  color: #2E7D32;
+  color: #1B5E20; /* Verde escuro - Contraste > 6:1 */
 }
 
 .offer-status-badge.status-rejected {
-  background-color: #FFEBEE;
-  color: #C62828;
+  background-color: #F2ECEB; /* Fundo creme terroso neutro */
+  color: #472421; /* Terracota Escuro - Contraste > 10:1 */
 }
 
 .empty-list-box {
@@ -683,14 +568,14 @@
 }
 
 .btn-accept {
-  background-color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-dark);
   color: #FFFFFF;
 }
 
 .btn-accept:hover:not(:disabled) {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary-light);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .btn-reject {
@@ -907,14 +792,14 @@
 }
 
 .btn-modal-confirm {
-  background-color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-dark);
   color: #FFFFFF;
 }
 
 .btn-modal-confirm:hover:not(:disabled) {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary-light);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .btn-modal:disabled {
@@ -1188,4 +1073,17 @@
     bottom: 16px;
     justify-content: center;
   }
+}
+
+
+/* Acessibilidade: Indicadores de Foco Visível WCAG AA */
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(112, 107, 47, 0.3);
 }

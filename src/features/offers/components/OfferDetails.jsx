@@ -1,4 +1,4 @@
-export default function OfferDetails({ offer, item, currentUser, onAccept, onReject, isActionLoading, onBackToList, onGoToCollection }) {
+export default function OfferDetails({ offer, item, currentUser, onAccept, onReject, isActionLoading, onBackToList }) {
   if (!offer) {
     return (
       <div className="placeholder-box">
@@ -57,7 +57,7 @@ export default function OfferDetails({ offer, item, currentUser, onAccept, onRej
       if (offer.status === 'ACCEPTED') {
         return {
           disabled: true,
-          reason: 'Esta proposta já foi aceita por você. Coleta agendada.'
+          reason: 'Esta proposta já foi aceita por você.'
         };
       }
       return {
@@ -114,7 +114,7 @@ export default function OfferDetails({ offer, item, currentUser, onAccept, onRej
         <div className="details-meta-item">
           <span className="meta-label">Valor Ofertado</span>
           <span className="meta-value price-highlight">
-            {offer.price === 0 ? 'Grátis (Doação)' : `R$ ${offer.price.toFixed(2)}`}
+            {offer.price === 0 ? 'Retirada gratuita' : `R$ ${offer.price.toFixed(2)}`}
           </span>
         </div>
         
@@ -140,35 +140,23 @@ export default function OfferDetails({ offer, item, currentUser, onAccept, onRej
 
       {/* Botões de Ação */}
       <div className="details-action-buttons">
-        {offer.collectionId ? (
-          <button
-            type="button"
-            onClick={() => onGoToCollection(offer.collectionId)}
-            className="btn-action btn-go-to-collection"
-          >
-            📅 Ver Coleta
-          </button>
-        ) : (
-          <>
-            <button
-              type="button"
-              onClick={() => onReject(offer)}
-              className="btn-action btn-reject"
-              disabled={decision.disabled || isActionLoading}
-            >
-              {isActionLoading ? 'Processando...' : 'Recusar Proposta'}
-            </button>
+        <button
+          type="button"
+          onClick={() => onReject(offer)}
+          className="btn-action btn-reject"
+          disabled={decision.disabled || isActionLoading}
+        >
+          {isActionLoading ? 'Processando...' : 'Recusar Proposta'}
+        </button>
 
-            <button
-              type="button"
-              onClick={() => onAccept(offer)}
-              className="btn-action btn-accept"
-              disabled={decision.disabled || isActionLoading}
-            >
-              {isActionLoading ? 'Processando...' : 'Aceitar Proposta'}
-            </button>
-          </>
-        )}
+        <button
+          type="button"
+          onClick={() => onAccept(offer)}
+          className="btn-action btn-accept"
+          disabled={decision.disabled || isActionLoading}
+        >
+          {isActionLoading ? 'Processando...' : 'Aceitar Proposta'}
+        </button>
       </div>
     </div>
   );

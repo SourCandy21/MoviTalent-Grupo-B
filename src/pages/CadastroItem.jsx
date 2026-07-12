@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import btimg from '../assets/btimg.png'
+import btimg from '../assets/BTimg.png'
 import './CadastroItem.css'
 
 export default function CadastroItem() {
+  console.log("CadastroItem.jsx renderizado");
   const [images, setImages] = useState([]);
   const [condicao, setCondicao] = useState('');
 
@@ -34,6 +35,19 @@ export default function CadastroItem() {
               <small className="upload-subtext">selecione até 3 fotos</small>
             </div>
           </label>
+
+          {images.length > 0 && (
+            <div className="images-preview-row" style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+              {images.map((file, idx) => (
+                <img 
+                  key={idx} 
+                  src={URL.createObjectURL(file)} 
+                  alt={`Preview ${idx + 1}`} 
+                  style={{ width: '65px', height: '65px', borderRadius: '6px', objectFit: 'cover', border: '1px solid #ddd' }} 
+                />
+              ))}
+            </div>
+          )}
 
           {/* Text Inputs */}
           <div className="input-group">

@@ -6,7 +6,7 @@ let itemsMock = [
     description: 'Geladeira funcionando perfeitamente. Estou doando pois comprei uma nova. Retirar no local.',
     type: 'USER',
     status: 'NEGOTIATING',
-    imageUrl: 'https://images.unsplash.com/photo-1571887455891-298090533924?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+    imageUrl: 'https://images.unsplash.com/photo-1721613877687-c9099b698faa?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     price: 0,
     ownerId: 'user-current'
   },
@@ -107,17 +107,6 @@ let offersMock = [
   }
 ];
 
-let collectionsMock = [
-  {
-    id: 'col-1',
-    itemId: 'item-2',
-    offerId: 'offer-4',
-    scheduledTime: '2026-07-12T09:00:00.000Z',
-    status: 'SCHEDULED',
-    confirmedByAnnouncer: false,
-    confirmedByCollector: false
-  }
-];
 
 // Funções do serviço (simulando chamadas de rede com delay)
 export const offerService = {
@@ -191,31 +180,17 @@ export const offerService = {
           return o;
         });
 
-        const newCollection = {
-          id: `col-${Math.random().toString(36).substr(2, 9)}`,
-          itemId: offer.itemId,
-          offerId: offer.id,
-          scheduledTime: offer.scheduledTime,
-          status: 'SCHEDULED',
-          confirmedByAnnouncer: false,
-          confirmedByCollector: false
-        };
-        collectionsMock.push(newCollection);
-
-        // Associa o ID da coleta no card de oferta aceito e no item reservado
+        // Associa o estado ACCEPTED na proposta aceita e no item reservado
         const acceptedOfferIndex = offersMock.findIndex(o => o.id === offerId);
         if (acceptedOfferIndex !== -1) {
           offersMock[acceptedOfferIndex].status = 'ACCEPTED';
-          offersMock[acceptedOfferIndex].collectionId = newCollection.id;
         }
         itemsMock[itemIndex].status = 'RESERVED';
-        itemsMock[itemIndex].collectionId = newCollection.id;
 
         resolve({
-          message: 'Proposta aceita com sucesso. Coleta agendada.',
+          message: 'Proposta aceita com sucesso.',
           offer: offersMock[acceptedOfferIndex],
-          item: itemsMock[itemIndex],
-          collection: newCollection
+          item: itemsMock[itemIndex]
         });
       }, 800);
     });
@@ -241,63 +216,6 @@ export const offerService = {
     });
   },
 
-  // Consulta agendamento de coleta associado a um item ou proposta
-  getCollectionByItem: (itemId) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const col = collectionsMock.find(c => c.itemId === itemId);
-        resolve(col ? { ...col } : null);
-      }, 400);
-    });
-  },
-
-  // Consulta agendamento de coleta por ID
-  getCollectionById: (collectionId) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const col = collectionsMock.find(c => c.id === collectionId);
-        if (col) {
-          resolve({ ...col });
-        } else {
-          reject(new Error('Agendamento de coleta não encontrado.'));
-        }
-      }, 400);
-    });
-  },
-
-  // Simula confirmação mútua de coleta (PATCH /api/collections/:id/confirm)
-  confirmCollection: (collectionId, userType) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const colIndex = collectionsMock.findIndex(c => c.id === collectionId);
-        if (colIndex === -1) {
-          reject(new Error('Agendamento de coleta não encontrado.'));
-          return;
-        }
-
-        const col = collectionsMock[colIndex];
-        if (userType === 'announcer') {
-          collectionsMock[colIndex].confirmedByAnnouncer = true;
-        } else if (userType === 'collector') {
-          collectionsMock[colIndex].confirmedByCollector = true;
-        }
-
-        if (collectionsMock[colIndex].confirmedByAnnouncer && collectionsMock[colIndex].confirmedByCollector) {
-          collectionsMock[colIndex].status = 'COLLECTED';
-          
-          const itemIndex = itemsMock.findIndex(i => i.id === col.itemId);
-          if (itemIndex !== -1) {
-            itemsMock[itemIndex].status = 'COLLECTED';
-          }
-        }
-
-        resolve({
-          message: 'Coleta atualizada com sucesso.',
-          collection: collectionsMock[colIndex]
-        });
-      }, 600);
-    });
-  },
 
   // Retorna o usuário atualmente logado (simulado, preparando para JWT)
   getCurrentUser: () => {
