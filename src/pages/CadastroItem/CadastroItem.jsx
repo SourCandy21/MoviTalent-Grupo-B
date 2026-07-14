@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import btimg from '../assets/BTimg.png'
+import btimg from '../../assets/BTimg.png'
 import './CadastroItem.css'
 
 export default function CadastroItem() {

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './pages/navbar/navbar';
-import CadastroItem from './pages/CadastroItem';
+import Navbar from './components/navbar/navbar';
+import CadastroItem from './pages/CadastroItem/CadastroItem';
 import ManageOffersPage from './features/offers/pages/ManageOffersPage';
 
 export default function App() {
